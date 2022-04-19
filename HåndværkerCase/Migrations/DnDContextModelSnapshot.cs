@@ -19,7 +19,7 @@ namespace HåndværkerCase.Migrations
 
             modelBuilder.Entity("HåndværkerCase.Models.Beskrivelse", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -29,13 +29,10 @@ namespace HåndværkerCase.Migrations
                     b.Property<decimal>("Pris")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("beskrivelse")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("CaseId");
 

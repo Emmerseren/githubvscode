@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HåndværkerCase.Migrations
 {
     [DbContext(typeof(DnDContext))]
-    [Migration("20220405091038_init")]
+    [Migration("20220417202519_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace HåndværkerCase.Migrations
 
             modelBuilder.Entity("HåndværkerCase.Models.Beskrivelse", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -31,13 +31,10 @@ namespace HåndværkerCase.Migrations
                     b.Property<decimal>("Pris")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("beskrivelse")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("CaseId");
 

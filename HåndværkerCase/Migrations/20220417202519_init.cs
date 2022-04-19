@@ -30,16 +30,15 @@ namespace HåndværkerCase.Migrations
                 name: "beskrivelser",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     beskrivelse = table.Column<string>(type: "TEXT", nullable: true),
                     Pris = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Status = table.Column<bool>(type: "INTEGER", nullable: false),
                     CaseId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_beskrivelser", x => x.id);
+                    table.PrimaryKey("PK_beskrivelser", x => x.Id);
                     table.ForeignKey(
                         name: "FK_beskrivelser_cases_CaseId",
                         column: x => x.CaseId,

@@ -1,4 +1,5 @@
-using HåndværkerCase.Models;
+
+using HÃ¥ndvÃ¦rkerCase.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,7 +65,10 @@ app.MapGet("/cases", () =>
 
 app.MapGet("/api/cases", async (DnDContext db) => await db.cases.ToListAsync());
 
-app.MapGet("/api/beskrivelser/{id}", async (DnDContext db, int id) => await db.beskrivelser.Include(e => e.Case).FirstOrDefaultAsync(e => e.id == id));
+app.MapGet("/api/beskrivelser/{id}", async (DnDContext db, int id) => await db.beskrivelser.Include(e => e.Case).FirstOrDefaultAsync(e => e.Id == id));
+
+app.MapGet("/api/cases/{id}", async (DnDContext db, int id) => await db.cases.FirstOrDefaultAsync(e => e.Id == id));
+
 
 app.MapGet("api/beskrivelser", async (DnDContext db) => await db.beskrivelser.Include(e => e.Case).ToListAsync());
 
@@ -77,6 +81,61 @@ app.MapPost("/api/cases", async (DnDContext db, Case cases) =>
 
     return Results.Ok(cases);
 });
+
+app.MapPost("/api/beskrivelser", async (DnDContext db, Beskrivelse beskrivelse) =>
+{
+    await db.beskrivelser.AddAsync(beskrivelse);
+    await db.SaveChangesAsync();
+
+    return Results.Ok(beskrivelse);
+});
+
+app.MapDelete("/api/cases/{id}", async (DnDContext db, int id) =>
+{
+    var item = await db.cases.FindAsync(id);
+    if (item == null) return Results.NotFound();
+
+    db.cases.Remove(item);
+
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/api/beskrivelser/{id}", async (DnDContext db, int id) =>
+{
+    var item = await db.beskrivelser.FindAsync(id);
+    if (item == null) return Results.NotFound();
+
+    db.beskrivelser.Remove(item);
+
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapPut("/api/beskrivelser/{id}", async (DnDContext db, int id, Beskrivelse beskrivelser ) =>
+{
+    if (beskrivelser.Id != id) return Results.BadRequest();
+
+    db.beskrivelser.Update(beskrivelser);
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapPut("/api/cases/{id}", async (DnDContext db, int id, Case cases) => 
+    {
+
+        if(cases.Id != id) return Results.BadRequest();
+
+        db.cases.Update(cases);
+        await db.SaveChangesAsync();
+
+        return Results.NoContent();
+});
+
 app.Run();
+
 
 
